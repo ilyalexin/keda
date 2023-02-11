@@ -82,6 +82,10 @@ func main() {
 	var webhooksServiceName string
 	var enableCertRotation bool
 	var validatingWebhookName string
+	var otelHttpEnabled bool
+	var otelHttpInsecure bool
+	var otelHttpTimeout string
+	var otelHttpTarget string
 	pflag.StringVar(&metricsAddr, "metrics-bind-address", ":8080", "The address the metric endpoint binds to.")
 	pflag.StringVar(&probeAddr, "health-probe-bind-address", ":8081", "The address the probe endpoint binds to.")
 	pflag.StringVar(&metricsServiceAddr, "metrics-service-bind-address", ":9666", "The address the gRPRC Metrics Service endpoint binds to.")
@@ -98,6 +102,10 @@ func main() {
 	pflag.StringVar(&webhooksServiceName, "webhooks-service-name", "keda-admission-webhooks", "Webhook service name. Defaults to keda-admission-webhooks")
 	pflag.BoolVar(&enableCertRotation, "enable-cert-rotation", false, "enable automatic generation and rotation of TLS certificates/keys")
 	pflag.StringVar(&validatingWebhookName, "validating-webhook-name", "keda-admission", "ValidatingWebhookConfiguration name. Defaults to keda-admission")
+	pflag.BoolVar(&otelHttpEnabled, "otel-http-enabled", false, "enable opentelemetry http exporter. Defaults to false")
+	pflag.BoolVar(&otelHttpInsecure, "otel-http-insecure", false, "enable insecure connection for opentelemetry http exporter. Defaults to false")
+	pflag.StringVar(&otelHttpTimeout, "otel-http-timeout", "10s", "opentelemetry http exporter timeout. Defaults to 10s")
+	pflag.StringVar(&otelHttpTarget, "otel-http-target", "", "opentelemetry http exporter target where it forwards otel metrics")
 	opts := zap.Options{}
 	opts.BindFlags(flag.CommandLine)
 	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
